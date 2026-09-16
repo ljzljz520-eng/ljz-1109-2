@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>设计规范说明 · 景泰蓝工艺志</title>
+  <meta name="description" content="景泰蓝工艺网站设计规范：主题 token、组件、动效、响应式断点、懒加载与滚动显现的低性能降级策略。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23a8332b'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23f7ead8' font-family='serif' font-weight='bold'%3E蓝%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-seal" aria-hidden="true">蓝</span>
+        <span class="brand-text">
+          <strong>景泰蓝工艺志</strong>
+          <small>CLOISONNÉ ENAMEL</small>
+        </span>
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="主导航">
+        <a href="index.html">工艺流程</a>
+        <a href="cases.html">器物案例</a>
+        <a href="design-spec.html" aria-current="page">设计规范</a>
+      </nav>
+      <div class="header-tools">
+        <button type="button" class="perf-toggle" aria-pressed="false" title="切换低性能模式">
+          <span class="dot" aria-hidden="true"></span><span class="perf-label">标准模式</span>
+        </button>
+        <button type="button" class="nav-toggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mainNav">
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" style="padding: clamp(2.6rem,6vw,4.2rem) 0;">
+      <div class="container reveal">
+        <span class="eyebrow">DESIGN SPEC</span>
+        <h1 style="font-size:var(--fs-2xl); margin-bottom:var(--space-3);">设计规范说明</h1>
+        <p class="lead">本页是网站的设计与实现契约：所有视觉取值集中于 <b style="color:var(--color-gold-bright)">主题 token</b>，每个组件条目都引用站点中的<b style="color:var(--color-gold-bright)">真实组件</b>（内嵌实例 + 线上页面锚点），并完整说明动效、懒加载、滚动显现在低性能模式下的降级规则。</p>
+      </div>
+    </section>
+
+    <div class="container spec-layout">
+      <!-- 目录 -->
+      <aside class="spec-toc" aria-label="规范目录">
+        <h2>目录</h2>
+        <a href="#sec-principle">壹 · 设计原则</a>
+        <a href="#sec-token">贰 · 主题 Token</a>
+        <a href="#sec-color">叁 · 色彩系统</a>
+        <a href="#sec-type">肆 · 字体排印</a>
+        <a href="#sec-spacing">伍 · 间距与圆角</a>
+        <a href="#sec-components">陆 · 组件规范</a>
+        <a href="#sec-motion">柒 · 动效与滚动显现</a>
+        <a href="#sec-lazy">捌 · 懒加载</a>
+        <a href="#sec-perf">玖 · 低性能降级</a>
+        <a href="#sec-responsive">拾 · 响应式断点</a>
+        <a href="#sec-a11y">拾壹 · 无障碍</a>
+      </aside>
+
+      <article class="spec-doc">
+
+        <!-- 壹 原则 -->
+        <section class="spec-section reveal" id="sec-principle">
+          <h2><span class="no">壹</span>设计原则：器物气质的数字化转译</h2>
+          <ul>
+            <li><b>丝釉关系</b>：景泰蓝的视觉本质是“金线勾边、釉料填格”。界面用 <code>--color-wire</code> 金色细线（<code>--wire</code> token）对应铜丝，用浓郁色块对应珐琅釉，卡片边框即“掐丝”。</li>
+            <li><b>绢纸为底</b>：宣纸底色 <code>--color-paper</code> 叠加极淡噪点纹理，模拟绢本；低性能模式自动移除纹理与背景附着。</li>
+            <li><b>釉色克制</b>：珐琅五色（蓝、红、松石绿、雄黄、牙白）只用于强调与数据色，大面积正文保持墨色 <code>--color-ink</code>，避免色彩喧闹。</li>
+            <li><b>宋式秩序</b>：标题取宋体（Noto Serif SC）、宽行距 <code>1.85</code>、区块居中对称，呼应官窑构图的端庄；交互控件用无衬线保证清晰度。</li>
+            <li><b>真实可验</b>：本规范的每个组件都可在站点实际页面找到对应实例，而非纯文档示意。</li>
+          </ul>
+        </section>
+
+        <!-- 贰 Token -->
+        <section class="spec-section reveal" id="sec-token">
+          <h2><span class="no">贰</span>主题 Token</h2>
+          <p>所有设计取值集中定义于 <code>assets/css/tokens.css</code> 的 <code>:root</code>，组件样式只允许引用变量、不得硬编码色值与尺寸。Token 分七层：品牌釉色、语义别名、字体、间距、圆角阴影、动效、布局。</p>
+          <pre class="code-block"><code><span class="tok-c">/* tokens.css 节选 */</span>
+:root {
+  <span class="tok-c">/* 釉色 → 语义别名 */</span>
+  <span class="tok-v">--color-primary</span>: var(--color-enamel-blue);
+  <span class="tok-v">--color-accent</span>: var(--color-enamel-red);
+  <span class="tok-v">--color-gold</span>: var(--color-wire);
+  <span class="tok-v">--color-bg</span>: var(--color-paper);
+  <span class="tok-v">--color-surface</span>: var(--color-paper-card);
+
+  <span class="tok-c">/* 动效 */</span>
+  <span class="tok-v">--dur-fast</span>: 160ms;  <span class="tok-v">--dur</span>: 280ms;  <span class="tok-v">--dur-slow</span>: 520ms;
+  <span class="tok-v">--ease-out</span>: cubic-bezier(0.22, 0.61, 0.36, 1);
+}</code></pre>
+          <div class="live-ref">
+            <span>真实文件：全站唯一 token 来源，首页头图、工序卡与案例卡均消费这些变量。</span>
+            <a href="assets/css/tokens.css">查看 tokens.css →</a>
+          </div>
+        </section>
+
+        <!-- 叁 色彩 -->
+        <section class="spec-section reveal" id="sec-color">
+          <h2><span class="no">叁</span>色彩系统</h2>
+          <p>釉色板取自传统珐琅矿物呈色：钴蓝、矾红、铜绿（松石绿）、锑黄（鎏金黄）与牙白。每色均有深 / 亮两档以承载悬停态。</p>
+          <div class="swatch-grid">
+            <div class="swatch-tile"><i style="background:#1c3d6e"></i><div class="sw-meta"><b>珐琅蓝</b><code>#1c3d6e</code></div></div>
+            <div class="swatch-tile"><i style="background:#122a4d"></i><div class="sw-meta"><b>深珐琅蓝</b><code>#122a4d</code></div></div>
+            <div class="swatch-tile"><i style="background:#2e5a96"></i><div class="sw-meta"><b>亮珐琅蓝</b><code>#2e5a96</code></div></div>
+            <div class="swatch-tile"><i style="background:#a8332b"></i><div class="sw-meta"><b>矾红</b><code>#a8332b</code></div></div>
+            <div class="swatch-tile"><i style="background:#3f8e86"></i><div class="sw-meta"><b>松石绿</b><code>#3f8e86</code></div></div>
+            <div class="swatch-tile"><i style="background:#c99a3a"></i><div class="sw-meta"><b>鎏金黄</b><code>#c99a3a</code></div></div>
+            <div class="swatch-tile"><i style="background:#b08d3e"></i><div class="sw-meta"><b>铜丝金</b><code>#b08d3e</code></div></div>
+            <div class="swatch-tile"><i style="background:#e7d9b8"></i><div class="sw-meta"><b>牙白</b><code>#e7d9b8</code></div></div>
+            <div class="swatch-tile"><i style="background:#f5efe3"></i><div class="sw-meta"><b>宣纸底</b><code>#f5efe3</code></div></div>
+            <div class="swatch-tile"><i style="background:#1d1a17"></i><div class="sw-meta"><b>墨色</b><code>#1d1a17</code></div></div>
+          </div>
+          <table class="token-table">
+            <thead><tr><th>语义 token</th><th>取值</th><th>用途</th></tr></thead>
+            <tbody>
+              <tr><td><code>--color-primary</code></td><td>珐琅蓝</td><td>主按钮、选中态、链接强调</td></tr>
+              <tr><td><code>--color-accent</code></td><td>矾红</td><td>印章、当前导航下划线、温度高亮</td></tr>
+              <tr><td><code>--color-gold</code></td><td>铜丝金</td><td>卡片描边、时间线序号、分隔金线</td></tr>
+              <tr><td><code>--color-text</code></td><td>墨色</td><td>正文与标题</td></tr>
+            </tbody>
+          </table>
+          <div class="live-ref">
+            <span>真实组件：器物详情页“釉色”面板中的色点与本页同一取色逻辑。</span>
+            <a href="detail.html?id=meiping-changzhilian">查看真实釉色面板 →</a>
+          </div>
+        </section>
+
+        <!-- 肆 字体 -->
+        <section class="spec-section reveal" id="sec-type">
+          <h2><span class="no">肆</span>字体排印</h2>
+          <p>标题与器物名称用 <b>Noto Serif SC（宋体系）</b>，正文与控件用 <b>Noto Sans SC</b>；西文标签采用大字距小字号（如 <code>WIRE BENDING</code>）作“题款”。字号为等差尺度，行高正文 <code>1.85</code>、标题 <code>1.35</code>。</p>
+          <div class="type-scale">
+            <div class="type-row"><span class="type-name">fs-hero</span><span class="type-sample" style="font-size:var(--fs-hero)">百火千丝</span></div>
+            <div class="type-row"><span class="type-name">fs-2xl</span><span class="type-sample" style="font-size:var(--fs-2xl)">器物案例鉴赏</span></div>
+            <div class="type-row"><span class="type-name">fs-xl</span><span class="type-sample" style="font-size:var(--fs-xl)">掐丝 · 点蓝 · 烧制 · 磨光</span></div>
+            <div class="type-row"><span class="type-name">fs-lg</span><span class="type-sample" style="font-size:var(--fs-lg)">缠枝莲纹梅瓶</span></div>
+            <div class="type-row"><span class="type-name">fs-base</span><span class="type-sample" style="font-family:var(--font-sans)">匠人以扁铜丝在铜胎上掐出纹样。</span></div>
+            <div class="type-row"><span class="type-name">fs-micro</span><span class="type-sample" style="font-family:var(--font-sans);font-size:var(--fs-micro);letter-spacing:0.28em">MATERIAL · 材料</span></div>
+          </div>
+        </section>
+
+        <!-- 伍 间距 -->
+        <section class="spec-section reveal" id="sec-spacing">
+          <h2><span class="no">伍</span>间距、圆角与阴影</h2>
+          <p>间距遵循 4px 基准网格，页面横向留白用 <code>--gutter</code> 随视口弹性伸缩（clamp 16–40px）。圆角分四档，卡片用 <code>--radius-lg: 14px</code>；阴影仅两档（静态 / 悬停），低性能下全部置空。</p>
+          <table class="token-table">
+            <thead><tr><th>Token</th><th>值</th><th>用途</th></tr></thead>
+            <tbody>
+              <tr><td><code>--space-4 / 5 / 6</code></td><td>16 / 24 / 32px</td><td>组件内边距、卡片间距</td></tr>
+              <tr><td><code>--space-8 / 9</code></td><td>64 / 96px</td><td>区块纵向留白</td></tr>
+              <tr><td><code>--radius-pill</code></td><td>999px</td><td>按钮、筛选 chip</td></tr>
+              <tr><td><code>--shadow-card</code></td><td>0 2px 10px rgba(29,26,23,.08)</td><td>卡片静态</td></tr>
+              <tr><td><code>--shadow-card-hover</code></td><td>0 14px 34px rgba(18,42,77,.16)</td><td>卡片悬停</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- 陆 组件 -->
+        <section class="spec-section reveal" id="sec-components">
+          <h2><span class="no">陆</span>组件规范（引用真实组件）</h2>
+          <p>以下实例与线上页面使用<b>同一份 class 与 token</b>，可直接悬停、点击体验；每节附对应真实页面入口。</p>
+
+          <h3>6.1 按钮 Button</h3>
+          <p class="demo-cap">.btn / .btn--primary / .btn--ghost / .btn--gold</p>
+          <div class="demo-block">
+            <div class="demo-row">
+              <a class="btn btn--primary" href="cases.html">主按钮</a>
+              <a class="btn btn--ghost" href="index.html#process">描边按钮</a>
+              <a class="btn btn--gold" href="#sec-components">鎏金按钮</a>
+            </div>
+          </div>
+          <pre class="code-block"><code>&lt;a class="btn btn--primary" href="cases.html"&gt;查看案例&lt;/a&gt;
+<span class="tok-c">&lt;!-- 悬停：translateY(-2px) + shadow-card-hover，280ms ease-out --&gt;</span></code></pre>
+          <div class="live-ref"><span>线上实例：首页头图 CTA、详情页“返回案例列表”。</span><a href="index.html">首页真实按钮 →</a></div>
+
+          <h3>6.2 筛选 Chip 与筛选组</h3>
+          <p class="demo-cap">.filter-group &gt; .chip[aria-pressed]</p>
+          <div class="demo-block">
+            <div class="demo-row">
+              <div class="filter-group" role="group" aria-label="规范页演示">
+                <span class="group-label">年代</span>
+                <button type="button" class="chip" aria-pressed="true">全部</button>
+                <button type="button" class="chip" aria-pressed="false">明代</button>
+                <button type="button" class="chip" aria-pressed="false">清代</button>
+                <button type="button" class="chip" aria-pressed="false">近现代</button>
+              </div>
+            </div>
+          </div>
+          <div class="live-ref"><span>真实组件：列表页三维度筛选，状态写入 URL 与 sessionStorage 快照。</span><a href="cases.html">操作真实筛选 →</a></div>
+
+          <h3>6.3 标签 Tag</h3>
+          <p class="demo-cap">.tag / .tag--era / .tag--shape</p>
+          <div class="demo-block">
+            <div class="demo-row tag-row" style="margin:0">
+              <span class="tag tag--era">明 · 宣德风格</span>
+              <span class="tag tag--shape">梅瓶</span>
+              <span class="tag">宝石蓝釉</span>
+            </div>
+          </div>
+          <div class="live-ref"><span>真实组件：案例卡卡首的三枚标签。</span><a href="cases.html">查看真实卡片 →</a></div>
+
+          <h3>6.4 工序节点卡 Process Step（含材料/温度/时长元数据）</h3>
+          <p class="demo-cap">.process-step &gt; .step-meta（真实结构节选自首页渲染）</p>
+          <div class="demo-block" style="background:rgba(28,61,110,0.04)">
+            <article class="process-step" data-step="叁" style="max-width:340px;width:100%;margin:auto;">
+              <div class="step-icon" style="color:var(--color-enamel-red)">
+                <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M32 8 C40 20 46 26 46 38 a14 14 0 0 1 -28 0 c0 -7 4 -11 8 -15 c1 5 4 7 6 7 C30 24 30 15 32 8 Z"/></svg>
+              </div>
+              <h3>烧制</h3>
+              <span class="step-sub">FIRING</span>
+              <p class="desc">点过釉的胎体送入炉中高温焙烧，釉粉熔融、玻化，与铜丝铜胎结合。</p>
+              <dl class="step-meta">
+                <div class="meta-row"><span class="meta-ic">▲</span><dt>温度</dt><dd class="temp-hot">约 800℃（750–850℃）</dd></div>
+                <div class="meta-row"><span class="meta-ic">◷</span><dt>时长</dt><dd>每次 3–5 分钟，复烧 3–5 次</dd></div>
+              </dl>
+            </article>
+          </div>
+          <div class="live-ref"><span>真实组件：首页四道工序时间线，由 data.js 的 PROCESS 渲染。</span><a href="index.html#process">查看完整时间线 →</a></div>
+
+          <h3>6.5 案例卡 Case Card</h3>
+          <p class="demo-cap">.case-card：悬停上浮 8px、SVG 器物放大 1.07、釉面扫光、箭头位移</p>
+          <div class="live-ref"><span>真实组件含懒加载骨架屏与内联 SVG，建议在列表页直接悬停验证。</span><a href="cases.html">进入真实卡片网格 →</a></div>
+
+          <h3>6.6 详情折叠面板与事实表</h3>
+          <p class="demo-cap">.detail-panel（原生 details/summary）· .fact-table</p>
+          <div class="demo-block">
+            <details class="detail-panel" open>
+              <summary>纹样 · 缠枝莲纹（演示）</summary>
+              <div class="panel-body"><p>以连绵卷草串联莲花，铜丝为骨、釉料填格。点击标题可折叠——与详情页同一组件。</p></div>
+            </details>
+            <dl class="fact-table" style="margin:0">
+              <div class="fact"><dt>器型</dt><dd>梅瓶</dd></div>
+              <div class="fact"><dt>主体釉色</dt><dd>宝石蓝釉</dd></div>
+            </dl>
+          </div>
+          <div class="live-ref"><span>真实组件：纹样 / 釉色 / 年代三块面板与四格事实表。</span><a href="detail.html?id=meiping-changzhilian">打开真实详情页 →</a></div>
+
+          <h3>6.7 站点页眉 / 品牌印章 / 性能开关</h3>
+          <p>即本页顶部：粘性页眉、红色“蓝”字印章在悬停时由倾斜回正，右侧 <code>.perf-toggle</code> 为全局性能模式开关（规范第玖节）。≤720px 时导航折叠为汉堡菜单。</p>
+        </section>
+
+        <!-- 柒 动效 -->
+        <section class="spec-section reveal" id="sec-motion">
+          <h2><span class="no">柒</span>动效与滚动显现</h2>
+          <ul>
+            <li><b>时长 token</b>：<code>--dur-fast 160ms</code>（小反馈）、<code>--dur 280ms</code>（悬停）、<code>--dur-slow 520ms</code>（滚动显现、图片淡入），统一缓动 <code>--ease-out</code>。</li>
+            <li><b>悬停反馈</b>：卡片 <code>translateY(-8px)</code> + 阴影加深；按钮上浮 2px；器物 SVG <code>scale(1.07)</code>；案例卡釉面有一次性扫光；导航下划线由中心展开。</li>
+            <li><b>滚动显现</b>：<code>.reveal</code> 元素初始透明下移 34px，进入视口 12% 时加 <code>.is-inview</code>；方向变体 <code>data-reveal="left|right|zoom"</code>；同组可用 <code>data-delay="90"</code> 错峰。基于 IntersectionObserver，进入后即 unobserve，只播放一次。</li>
+          </ul>
+          <pre class="code-block"><code>&lt;article class="process-step reveal" data-reveal="zoom" data-delay="90"&gt;
+<span class="tok-c">&lt;!-- 进入视口：opacity 0→1 / translateY 34px→0，520ms --&gt;</span></code></pre>
+          <div class="live-ref"><span>真实组件：本页所有章节卡片即为滚动显现对象，可上下滚动观察。</span><a href="index.html#process">首页错峰时间线 →</a></div>
+        </section>
+
+        <!-- 捌 懒加载 -->
+        <section class="spec-section reveal" id="sec-lazy">
+          <h2><span class="no">捌</span>懒加载策略</h2>
+          <ul>
+            <li>案例器物 SVG 容器标记 <code>data-lazy-art="案例id"</code>，默认渲染金色 shimmer 骨架屏（<code>.art-skeleton</code>）。</li>
+            <li>IntersectionObserver 以 <code>rootMargin: 160px</code> 预读：卡片距视口 160px 时即由 <code>svg.js</code> 生成内联 SVG，先插入再加 <code>.is-loaded</code> 透明淡入，骨架屏移除。</li>
+            <li>数据与结构同源：列表卡、详情大图共用 <code>CASES</code> 数据与 <code>vesselSVG()</code>，保证“所见即同一器物”。</li>
+            <li>字体使用 <code>display=swap</code>，避免字体阻塞渲染。</li>
+          </ul>
+          <pre class="code-block"><code><span class="tok-c">// app.js · lazyArt() 节选</span>
+<span class="tok-c">// 低性能或不支持 IO：跳过观察与骨架，直接同步渲染</span>
+<span class="tok-v">if</span> (Perf.isLow() || !('IntersectionObserver' <span class="tok-v">in</span> window)) render();
+<span class="tok-v">else</span> io.observe(slot);  <span class="tok-c">// rootMargin: 160px 预读</span></code></pre>
+        </section>
+
+        <!-- 玖 降级 -->
+        <section class="spec-section reveal" id="sec-perf">
+          <h2><span class="no">玖</span>低性能模式降级</h2>
+          <p>三种触发方式，优先级从高到低：URL 参数 <code>?perf=low</code> / <code>?perf=high</code> → 用户选择（<code>localStorage</code> 持久化）→ 自动探测（<code>hardwareConcurrency ≤ 2</code>、<code>deviceMemory ≤ 2</code> 或开启省流 <code>saveData</code>）。也响应系统 <code>prefers-reduced-motion</code>。</p>
+          <table class="token-table">
+            <thead><tr><th>能力</th><th>标准模式</th><th>低性能 / 减弱动效</th></tr></thead>
+            <tbody>
+              <tr><td>主题 token</td><td>阴影、280/520ms 动效</td><td>token 重写：阴影置 none、时长置 1ms</td></tr>
+              <tr><td>滚动显现</td><td>IO 触发淡入位移</td><td>直接全部 <code>.is-inview</code>，无 transform</td></tr>
+              <tr><td>懒加载</td><td>骨架屏 + 160px 预读 + 淡入</td><td>同步渲染全部 SVG，无骨架无动画</td></tr>
+              <tr><td>悬停反馈</td><td>上浮/扫光/缩放</td><td>保留颜色反馈，去除位移与扫光</td></tr>
+              <tr><td>背景与模糊</td><td>绢纸噪点、毛玻璃页眉、头图底纹</td><td>全部移除</td></tr>
+              <tr><td>装饰动画</td><td>头图宝瓶浮动、光环旋转</td><td>animation 归零</td></tr>
+              <tr><td>平滑滚动</td><td>scroll-behavior: smooth</td><td>auto</td></tr>
+            </tbody>
+          </table>
+          <div class="demo-block">
+            <p class="demo-cap" style="margin:0">立即体验（切换后全站即时生效并记忆）：</p>
+            <div class="demo-row">
+              <button type="button" class="btn btn--primary"
+                      onclick="localStorage.setItem('ct_perf_mode','low');document.documentElement.dataset.perf='low';alert('已切换：刷新页面或观察本页动画已全部停止');">模拟切换到低性能</button>
+              <a class="btn btn--ghost" href="?perf=low">以 ?perf=low 打开本页</a>
+              <a class="btn btn--ghost" href="?perf=high">以 ?perf=high 强制标准</a>
+            </div>
+          </div>
+          <div class="live-ref"><span>真实组件：每页页眉右上角的模式开关即同一实现，附 toast 反馈。</span><a href="cases.html?perf=low">在案例页验证降级懒加载 →</a></div>
+        </section>
+
+        <!-- 拾 响应式 -->
+        <section class="spec-section reveal" id="sec-responsive">
+          <h2><span class="no">拾</span>响应式断点</h2>
+          <p>移动优先、两档断点，布局从四列逐步折叠为单列；≤720px 切换汉堡导航并减小页眉高度。</p>
+          <table class="token-table">
+            <thead><tr><th>断点</th><th>工序/材料</th><th>案例网格</th><th>头图 / 详情 / 规范</th></tr></thead>
+            <tbody>
+              <tr><td>&gt;1024px</td><td>4 列</td><td>3 列</td><td>头图左右分栏；详情大图 sticky；规范带侧目录</td></tr>
+              <tr><td>≤1024px</td><td>2 列</td><td>2 列</td><td>头图堆叠；详情单列；目录隐藏</td></tr>
+              <tr><td>≤720px</td><td>1 列</td><td>1 列</td><td>汉堡导航；事实表单列；筛选组整行</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- 拾壹 无障碍 -->
+        <section class="spec-section reveal" id="sec-a11y">
+          <h2><span class="no">拾壹</span>无障碍与包容性</h2>
+          <ul>
+            <li>语义标签：header/nav/main/article/section/figure，导航有 <code>aria-label</code>，当前页用 <code>aria-current="page"</code>。</li>
+            <li>筛选 chip 用 <code>aria-pressed</code>，折叠面板用原生 <code>details/summary</code>，toast 用 <code>role="status" aria-live="polite"</code>。</li>
+            <li>所有装饰 SVG 标 <code>aria-hidden</code>，器物 SVG 带描述性 <code>aria-label</code>（如“掐丝珐琅缠枝莲纹梅瓶纹样示意”）。</li>
+            <li>键盘可达：焦点态统一金色 <code>--ring</code> 外环；汉堡按钮 <code>aria-expanded</code> / <code>aria-controls</code>。</li>
+            <li>色彩对比：正文墨色对宣纸底对比度 &gt; 10:1；状态不仅依赖颜色（选中 chip 同时有填充与按压属性）。</li>
+            <li>减弱动效：遵循 <code>prefers-reduced-motion</code>，效果与低性能模式一致。</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <h3>景泰蓝工艺志</h3>
+          <p>本规范与站点代码同步维护。修改视觉请先改 tokens.css，再在组件中引用，避免产生硬编码分叉。</p>
+        </div>
+        <nav aria-label="页脚导航">
+          <h3>导航</h3>
+          <a href="index.html">工艺流程</a>
+          <a href="cases.html">器物案例</a>
+          <a href="design-spec.html">设计规范说明</a>
+        </nav>
+        <div>
+          <h3>资源</h3>
+          <a href="assets/css/tokens.css">tokens.css</a>
+          <a href="assets/css/style.css">style.css</a>
+          <a href="assets/js/app.js">app.js</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 景泰蓝工艺志 · 教学演示站点</span>
+        <span>规范版本 v1.0 · 2026-09</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/svg.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

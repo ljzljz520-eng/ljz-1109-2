@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>器物详情 · 景泰蓝工艺志</title>
+  <meta name="description" content="景泰蓝器物详情：纹样构成与寓意、珐琅釉色搭配、年代定位与工艺背景。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23a8332b'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23f7ead8' font-family='serif' font-weight='bold'%3E蓝%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-seal" aria-hidden="true">蓝</span>
+        <span class="brand-text">
+          <strong>景泰蓝工艺志</strong>
+          <small>CLOISONNÉ ENAMEL</small>
+        </span>
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="主导航">
+        <a href="index.html">工艺流程</a>
+        <a href="cases.html" aria-current="page">器物案例</a>
+        <a href="design-spec.html">设计规范</a>
+      </nav>
+      <div class="header-tools">
+        <button type="button" class="perf-toggle" aria-pressed="false" title="切换低性能模式">
+          <span class="dot" aria-hidden="true"></span><span class="perf-label">标准模式</span>
+        </button>
+        <button type="button" class="nav-toggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mainNav">
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main data-detail-root>
+    <!-- 面包屑、器物大图、纹样/釉色/年代面板均由 app.js 依据 ?id= 渲染 -->
+    <noscript>
+      <div class="container" style="padding:4rem 0;">
+        <p>本页需要启用 JavaScript 以读取器物数据。请返回 <a href="cases.html">器物案例列表</a>。</p>
+      </div>
+    </noscript>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <h3>景泰蓝工艺志</h3>
+          <p>教学演示站点。釉色取色与纹样结构为风格化 SVG 示意，用于辅助理解掐丝珐琅的“丝—釉”关系。</p>
+        </div>
+        <nav aria-label="页脚导航">
+          <h3>导航</h3>
+          <a href="index.html">工艺流程</a>
+          <a href="cases.html">器物案例</a>
+          <a href="design-spec.html">设计规范说明</a>
+        </nav>
+        <div>
+          <h3>继续阅读</h3>
+          <a href="index.html#process">四道工序元数据</a>
+          <a href="cases.html">全部器物</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 景泰蓝工艺志 · 教学演示站点</span>
+        <span>纹样 · 釉色 · 年代</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/svg.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

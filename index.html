@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>景泰蓝 · 铜胎掐丝珐琅工艺志 | 首页</title>
+  <meta name="description" content="系统介绍景泰蓝（铜胎掐丝珐琅）掐丝、点蓝、烧制、磨光四道核心工序，含材料、温度、时长工艺元数据与历代器物鉴赏。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23a8332b'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23f7ead8' font-family='serif' font-weight='bold'%3E蓝%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- ============ 页眉 ============ -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="景泰蓝工艺志首页">
+        <span class="brand-seal" aria-hidden="true">蓝</span>
+        <span class="brand-text">
+          <strong>景泰蓝工艺志</strong>
+          <small>CLOISONNÉ ENAMEL</small>
+        </span>
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="主导航">
+        <a href="index.html" aria-current="page">工艺流程</a>
+        <a href="cases.html">器物案例</a>
+        <a href="design-spec.html">设计规范</a>
+      </nav>
+      <div class="header-tools">
+        <button type="button" class="perf-toggle" aria-pressed="false" title="切换低性能模式">
+          <span class="dot" aria-hidden="true"></span><span class="perf-label">标准模式</span>
+        </button>
+        <button type="button" class="nav-toggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mainNav">
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ 头图 ============ -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-copy reveal" data-reveal="left">
+          <span class="eyebrow">国家级非物质文化遗产</span>
+          <h1>一器之成，<em>百火千丝</em><br>铜胎掐丝珐琅工艺志</h1>
+          <p class="lead">景泰蓝，学名“铜胎掐丝珐琅”。匠人以扁铜丝在铜胎上掐出纹样，于丝间填施珐琅彩釉，经反复入炉烧制、砂石磨光、铜丝鎏金而成。本志依工序拆解其法，以器物印证其美。</p>
+          <div class="hero-actions">
+            <a class="btn btn--gold" href="#process">纵览四道工序</a>
+            <a class="btn btn--ghost" href="cases.html">鉴赏器物案例</a>
+          </div>
+          <div class="hero-meta">
+            <div><b>800℃</b><span>烧制玻化温度</span></div>
+            <div><b>3–5 次</b><span>点蓝复烧遍数</span></div>
+            <div><b>0.3mm</b><span>掐丝丝径起</span></div>
+            <div><b>约 700 年</b><span>在华传承脉络</span></div>
+          </div>
+        </div>
+        <div class="hero-art reveal" data-reveal="zoom">
+          <div class="vessel-stage" data-hero-art></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 四道工序 ============ -->
+    <section class="section" id="process">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="eyebrow">核心工序</span>
+          <h2 class="section-title">掐丝 · 点蓝 · 烧制 · 磨光</h2>
+          <p class="section-lead">四道工序环环相扣：丝为骨、釉为衣、火为媒、磨为魂。下列每张工序卡均标注材料、温度与时长三项工艺元数据。</p>
+        </header>
+        <div class="process-track" data-process-track><!-- JS 渲染工序卡 --></div>
+      </div>
+    </section>
+
+    <!-- ============ 材料带 ============ -->
+    <section class="section materials-band">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="eyebrow">物料之本</span>
+          <h2 class="section-title">铜胎 · 铜丝 · 珐琅釉 · 磨料</h2>
+          <p class="section-lead">“铜胎掐丝珐琅”之名，已将四种关键物料道尽。材料决定釉色的边界，也决定工序的分寸。</p>
+        </header>
+        <div class="material-grid" data-materials><!-- JS 渲染材料卡 --></div>
+      </div>
+    </section>
+
+    <!-- ============ 精选器物 ============ -->
+    <section class="section">
+      <div class="container">
+        <header class="section-head reveal">
+          <span class="eyebrow">器物印证</span>
+          <h2 class="section-title">从三件器物读懂景泰蓝</h2>
+          <p class="section-lead">明代的庄重、乾隆的繁丽、当代的新变，各取一例；完整八件案例与纹样、釉色、年代详解见案例列表。</p>
+        </header>
+        <div class="case-grid" data-featured-grid><!-- JS 渲染前三件 --></div>
+        <p style="text-align:center; margin-top:var(--space-7);" class="reveal">
+          <a class="btn btn--primary" href="cases.html">查看全部八件器物案例 →</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ 页脚 ============ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <h3>景泰蓝工艺志</h3>
+          <p>一份面向工艺爱好者与设计学习者的科普性网站。工序元数据参照传统作坊经验值整理，器物为教学示意，并非馆藏著录。</p>
+        </div>
+        <nav aria-label="页脚导航">
+          <h3>导航</h3>
+          <a href="index.html">工艺流程</a>
+          <a href="cases.html">器物案例</a>
+          <a href="design-spec.html">设计规范说明</a>
+        </nav>
+        <div>
+          <h3>工艺关键词</h3>
+          <a href="index.html#process">掐丝 / 点蓝</a>
+          <a href="index.html#process">烧制 / 磨光</a>
+          <a href="cases.html">纹样 / 釉色 / 年代</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 景泰蓝工艺志 · 教学演示站点</span>
+        <span>铜胎掐丝珐琅 · Cloisonné Enamel</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/svg.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

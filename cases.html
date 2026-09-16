@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>器物案例 · 景泰蓝工艺志</title>
+  <meta name="description" content="八件景泰蓝器物案例，可按年代、釉色、器型筛选；每件详解纹样寓意、珐琅釉色配方特征与年代定位。">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23a8332b'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23f7ead8' font-family='serif' font-weight='bold'%3E蓝%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-seal" aria-hidden="true">蓝</span>
+        <span class="brand-text">
+          <strong>景泰蓝工艺志</strong>
+          <small>CLOISONNÉ ENAMEL</small>
+        </span>
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="主导航">
+        <a href="index.html">工艺流程</a>
+        <a href="cases.html" aria-current="page">器物案例</a>
+        <a href="design-spec.html">设计规范</a>
+      </nav>
+      <div class="header-tools">
+        <button type="button" class="perf-toggle" aria-pressed="false" title="切换低性能模式">
+          <span class="dot" aria-hidden="true"></span><span class="perf-label">标准模式</span>
+        </button>
+        <button type="button" class="nav-toggle" aria-label="打开导航菜单" aria-expanded="false" aria-controls="mainNav">
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 页头 -->
+    <section class="hero" style="padding: clamp(2.6rem,6vw,4.2rem) 0;">
+      <div class="container">
+        <div class="reveal">
+          <span class="eyebrow">案例库</span>
+          <h1 style="font-size:var(--fs-2xl); margin-bottom:var(--space-3);">器物案例鉴赏</h1>
+          <p class="lead">八件器物，纵跨明代宣德至当代复刻。可按<b style="color:var(--color-gold-bright)">年代、釉色、器型</b>三维度组合筛选；进入详情再返回时，筛选状态会自动还原——列表与详情共享同一份筛选快照。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <!-- 筛选条 -->
+        <div class="filters reveal" data-filter-bar role="region" aria-label="案例筛选"><!-- JS 渲染 --></div>
+
+        <!-- 案例网格 -->
+        <div class="case-grid" data-case-grid><!-- JS 渲染 --></div>
+
+        <!-- 无结果 -->
+        <div class="no-result" role="status">
+          <p style="font-size:var(--fs-md); margin-bottom:var(--space-2);">未找到符合当前筛选条件的器物</p>
+          <p>请尝试放宽年代、釉色或器型条件。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <h3>景泰蓝工艺志</h3>
+          <p>教学演示站点。器物纹样与釉色描述服务于工艺科普，SVG 器物为风格化示意，不代表文物原件。</p>
+        </div>
+        <nav aria-label="页脚导航">
+          <h3>导航</h3>
+          <a href="index.html">工艺流程</a>
+          <a href="cases.html">器物案例</a>
+          <a href="design-spec.html">设计规范说明</a>
+        </nav>
+        <div>
+          <h3>鉴赏维度</h3>
+          <a href="cases.html">按年代筛选</a>
+          <a href="cases.html">按釉色筛选</a>
+          <a href="cases.html">按器型筛选</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 景泰蓝工艺志 · 教学演示站点</span>
+        <span>筛选状态通过 sessionStorage 快照共享</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/svg.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
